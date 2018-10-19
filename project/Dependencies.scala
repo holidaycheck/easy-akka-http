@@ -7,6 +7,7 @@ object Dependencies {
   val AkkaVersion          = "2.5.17"
   val CirceVersion         = "0.10.0"
   val AkkaHttpCirceVersion = "1.22.0"
+  val RefinedVersion       = "0.9.2"
 
   lazy val circe = Seq(
     "io.circe" %% "circe-core",
@@ -25,6 +26,11 @@ object Dependencies {
 
   lazy val cats = Seq(
     "org.typelevel" %% "cats-effect" % CatsEffectVersion
+  )
+
+  lazy val refined = Seq(
+    "eu.timepit" %% "refined"            % RefinedVersion,
+    "eu.timepit" %% "refined-pureconfig" % RefinedVersion
   )
 
   lazy val akkaHttpDependencies = Seq(
