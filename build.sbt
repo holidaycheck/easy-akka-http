@@ -24,5 +24,5 @@ lazy val root = (project in file("."))
 lazy val easyAkkaClient = (project in file("easy-akka-client"))
   .settings(
     name := "easy-akka-client",
-    libraryDependencies := akkaHttpDependencies ++ cats ++ scalaTest
+    libraryDependencies := akkaHttpDependencies ++ cats ++ scalaTest ++ akkaHttpCirce ++ circe
   )
