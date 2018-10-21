@@ -23,7 +23,7 @@ class RefinedUnmarshallerSpec extends FlatSpec with Matchers {
       | import com.holidaycheck.akka.http.RefinedUnmarshaller._
       | import akka.http.scaladsl.server.Directive1
       | import akka.http.scaladsl.server.Directives._
-      | val directive: Directive1[Refined[Int, Number]] = parameter('id.as[Number])
+      | val directive: Directive1[Refined[Int, NonNegative]] = parameter('id.as[Number])
     """.stripMargin should compile
   }
 
