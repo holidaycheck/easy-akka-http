@@ -29,6 +29,6 @@ lazy val easyAkkaClient = (project in file("easy-akka-client"))
 
 lazy val easyAkkaMarshalling = (project in file("easy-akka-marshalling"))
   .settings(
-    name := "easy-akka-client",
+    name := "easy-akka-marshalling",
     libraryDependencies := akkaHttpDependencies ++ cats ++ scalaTest ++ akkaHttpCirce ++ circe ++ refined
   )
