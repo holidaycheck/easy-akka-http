@@ -5,7 +5,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.pattern.CircuitBreaker
-import akka.stream.{ActorMaterializer, Materializer}
+import akka.stream.Materializer
 import cats.effect.IO
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Decoder
@@ -30,6 +30,7 @@ class EasyClient(request: HttpRequest => Future[HttpResponse])(implicit mat: Mat
         case Success(HttpResponse(code, _, entity, _)) if code.isSuccess() && code.allowsEntity() =>
           Unmarshal(entity).to[R]
         case Success(failedResponse) =>
+          failedResponse.entity.discardBytes()
           Future.failed(
             new Exception(
               s"Could not decode response with code: ${failedResponse.status} for request: $req and failed response: $failedResponse"
@@ -43,12 +44,12 @@ object EasyClient {
   def apply()(implicit sys: ActorSystem, mat: Materializer): EasyClient =
     new EasyClient(Http().singleRequest(_))
 
-  def withBreaker(implicit sys: ActorSystem, mat: ActorMaterializer): EasyClient = {
+  def withBreaker(implicit sys: ActorSystem, mat: Materializer): EasyClient = {
     val breaker =
       CircuitBreaker(scheduler = sys.scheduler, maxFailures = 10, callTimeout = 5.second, resetTimeout = 30.seconds)
     new EasyClient(req => breaker.withCircuitBreaker(Http().singleRequest(req)))
   }
 
-  def withBreaker(breaker: CircuitBreaker)(implicit sys: ActorSystem, mat: ActorMaterializer): EasyClient =
+  def withBreaker(breaker: CircuitBreaker)(implicit sys: ActorSystem, mat: Materializer): EasyClient =
     new EasyClient(req => breaker.withCircuitBreaker(Http().singleRequest(req)))
 }
