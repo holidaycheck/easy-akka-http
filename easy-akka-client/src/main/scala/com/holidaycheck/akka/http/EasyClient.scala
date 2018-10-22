@@ -2,11 +2,12 @@ package com.holidaycheck.akka.http
 
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.model.{HttpRequest, HttpResponse}
+import akka.http.scaladsl.model.{HttpRequest, HttpResponse, StatusCode}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.pattern.CircuitBreaker
 import akka.stream.Materializer
 import cats.effect.IO
+import com.holidaycheck.akka.http.EasyClient.RequestFailed
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Decoder
 
@@ -32,8 +33,9 @@ class EasyClient(request: HttpRequest => Future[HttpResponse])(implicit mat: Mat
         case Success(failedResponse) =>
           failedResponse.entity.discardBytes()
           Future.failed(
-            new Exception(
-              s"Could not decode response with code: ${failedResponse.status} for request: $req and failed response: $failedResponse"
+            RequestFailed(
+              s"Could not decode response with code: ${failedResponse.status} for request: $req and failed response: $failedResponse",
+              failedResponse.status
             )
           )
         case Failure(err) => Future.failed(err)
@@ -41,6 +43,8 @@ class EasyClient(request: HttpRequest => Future[HttpResponse])(implicit mat: Mat
 }
 
 object EasyClient {
+  case class RequestFailed(msg: String, code: StatusCode) extends Throwable(msg)
+
   def apply()(implicit sys: ActorSystem, mat: Materializer): EasyClient =
     new EasyClient(Http().singleRequest(_))
 

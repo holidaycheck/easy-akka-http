@@ -4,6 +4,7 @@ import akka.actor.ActorSystem
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse, StatusCodes}
 import akka.stream.ActorMaterializer
+import com.holidaycheck.akka.http.EasyClient.RequestFailed
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
 import org.scalatest.{AsyncFlatSpec, Matchers}
@@ -45,13 +46,13 @@ class EasyClientSpec extends AsyncFlatSpec with Matchers with FailFastCirceSuppo
   it should "fail when status is not success" in {
     val failingService = new EasyClient(_ => Future.successful(HttpResponse(status = StatusCodes.EarlyHints)))
       .callTo[ExampleResponse](HttpRequest())
-    recoverToSucceededIf[Exception](failingService)
+    recoverToSucceededIf[RequestFailed](failingService)
   }
 
   it should "fail when status does not allow an entity" in {
     val failingService = new EasyClient(_ => Future.successful(HttpResponse(status = StatusCodes.NoContent)))
       .callTo[ExampleResponse](HttpRequest())
-    recoverToSucceededIf[Exception](failingService)
+    recoverToSucceededIf[RequestFailed](failingService)
   }
 
   it should "fail when http request fails" in {
