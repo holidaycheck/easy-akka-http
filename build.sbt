@@ -3,7 +3,7 @@ import CompilerOptions._
 
 name in ThisBuild := "easy-akka-http"
 organization in ThisBuild := "com.holidaycheck"
-scalaVersion in ThisBuild := "2.12.6"
+scalaVersion in ThisBuild := "2.12.8"
 scalacOptions in ThisBuild ++= compilerOptions
 scalafmtOnCompile in ThisBuild := true
 
