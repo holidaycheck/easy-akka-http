@@ -3,7 +3,7 @@ import sbt._
 object Dependencies {
   val ScalaTestVersion     = "3.0.7"
   val AkkaHttpVersion      = "10.1.8"
-  val CatsEffectVersion    = "1.0.0"
+  val CatsEffectVersion    = "1.2.0"
   val AkkaVersion          = "2.5.21"
   val CirceVersion         = "0.11.1"
   val AkkaHttpCirceVersion = "1.25.2"
@@ -34,8 +34,9 @@ object Dependencies {
   )
 
   lazy val akkaHttpDependencies = Seq(
-    "com.typesafe.akka" %% "akka-http"         % AkkaHttpVersion,
-    "com.typesafe.akka" %% "akka-stream"       % AkkaVersion,
-    "com.typesafe.akka" %% "akka-http-testkit" % AkkaHttpVersion % Test
+    "com.typesafe.akka" %% "akka-http"           % AkkaHttpVersion,
+    "com.typesafe.akka" %% "akka-stream"         % AkkaVersion,
+    "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion % Test,
+    "com.typesafe.akka" %% "akka-http-testkit"   % AkkaHttpVersion % Test
   )
 }
