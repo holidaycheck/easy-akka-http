@@ -45,6 +45,8 @@ class Endpoint[F[_]: FMarshaller](getResult: () => F[Response]) {
 
 `FMarshaller`s for `cats.effect.IO`, `cats.Id` and `Future` are included.
 
+For the IO `FMarshaller` a `ContextShift[IO]` has to be provided, to prevent blocking the main thread.
+
 ## Using refined types in akka to extract request parameters - RefinedUnmarshaller
 
 This helps integrate [refined types](https://github.com/fthomas/refined) to akka parameter extraction in routes.

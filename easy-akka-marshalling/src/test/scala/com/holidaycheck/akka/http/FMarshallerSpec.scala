@@ -22,7 +22,11 @@ class FMarshallerSpec extends FlatSpec with Matchers {
 
   it should "find an implicit to compile for IO" in {
     """
-      | import cats.effect.IO
+      | import cats.effect._
+      | import scala.concurrent.ExecutionContext.global
+      |
+      | implicit val shift: ContextShift[IO] = IO.contextShift(global)
+      |
       | routeWithF[IO](() => IO.pure("OK"))
     """.stripMargin should compile
   }

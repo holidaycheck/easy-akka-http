@@ -2,7 +2,8 @@ package com.holidaycheck.akka.http
 
 import akka.http.scaladsl.marshalling.{GenericMarshallers, ToResponseMarshaller}
 import cats.Id
-import cats.effect.IO
+import cats.effect.{ContextShift, IO}
+import cats.syntax.apply._
 
 import scala.concurrent.Future
 
@@ -19,9 +20,9 @@ object FMarshaller {
       GenericMarshallers.futureMarshaller
   }
 
-  implicit val ioMarshaller: FMarshaller[IO] = new FMarshaller[IO] {
+  implicit def ioMarshaller(implicit s: ContextShift[IO]): FMarshaller[IO] = new FMarshaller[IO] {
     override implicit def marshallF[A](implicit m: ToResponseMarshaller[A]): ToResponseMarshaller[IO[A]] =
-      GenericMarshallers.futureMarshaller(m).compose(io => io.unsafeToFuture())
+      GenericMarshallers.futureMarshaller(m).compose(io => (s.shift *> io).unsafeToFuture())
   }
 
   implicit val idMarshaller: FMarshaller[Id] = new FMarshaller[Id] {
