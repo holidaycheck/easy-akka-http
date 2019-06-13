@@ -1,13 +1,13 @@
 import sbt._
 
 object Dependencies {
-  val ScalaTestVersion     = "3.0.7"
+  val ScalaTestVersion     = "3.0.8"
   val AkkaHttpVersion      = "10.1.8"
-  val CatsEffectVersion    = "1.2.0"
-  val AkkaVersion          = "2.5.21"
+  val CatsEffectVersion    = "1.3.1"
+  val AkkaVersion          = "2.5.23"
   val CirceVersion         = "0.11.1"
-  val AkkaHttpCirceVersion = "1.25.2"
-  val RefinedVersion       = "0.9.4"
+  val AkkaHttpCirceVersion = "1.26.0"
+  val RefinedVersion       = "0.9.8"
 
   lazy val circe = Seq(
     "io.circe" %% "circe-core",
