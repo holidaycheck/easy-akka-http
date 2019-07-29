@@ -7,7 +7,7 @@ object Dependencies {
   val AkkaVersion          = "2.5.23"
   val CirceVersion         = "0.11.1"
   val AkkaHttpCirceVersion = "1.27.0"
-  val RefinedVersion       = "0.9.8"
+  val RefinedVersion       = "0.9.9"
 
   lazy val circe = Seq(
     "io.circe" %% "circe-core",
