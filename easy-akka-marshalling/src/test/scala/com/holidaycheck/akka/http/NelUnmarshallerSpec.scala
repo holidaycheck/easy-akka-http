@@ -60,6 +60,7 @@ class NelUnmarshallerSpec extends AsyncFlatSpec with Matchers {
     implicit val sys: ActorSystem  = ActorSystem()
     implicit val mat: Materializer = ActorMaterializer()
     recoverToSucceededIf[IllegalArgumentException](
-      implicitly[FromStringUnmarshaller[NonEmptyList[Double]]].apply("hey, you"))
+      implicitly[FromStringUnmarshaller[NonEmptyList[Double]]].apply("hey, you")
+    )
   }
 }
