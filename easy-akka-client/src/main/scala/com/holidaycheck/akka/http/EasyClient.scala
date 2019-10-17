@@ -6,7 +6,7 @@ import akka.http.scaladsl.model.{HttpRequest, HttpResponse, StatusCode}
 import akka.http.scaladsl.unmarshalling.Unmarshal
 import akka.pattern.CircuitBreaker
 import akka.stream.Materializer
-import cats.effect.IO
+import cats.effect.{ContextShift, IO}
 import com.holidaycheck.akka.http.EasyClient.RequestFailed
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.Decoder
@@ -15,7 +15,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
-class EasyClient(request: HttpRequest => Future[HttpResponse])(implicit mat: Materializer)
+class EasyClient(request: HttpRequest => Future[HttpResponse])(implicit mat: Materializer, cs: ContextShift[IO])
     extends FailFastCirceSupport {
   def callUrl[R: Decoder](url: String): Future[R] =
     callTo(HttpRequest(uri = url))
@@ -45,15 +45,17 @@ class EasyClient(request: HttpRequest => Future[HttpResponse])(implicit mat: Mat
 object EasyClient {
   case class RequestFailed(msg: String, code: StatusCode) extends Throwable(msg)
 
-  def apply()(implicit sys: ActorSystem, mat: Materializer): EasyClient =
+  def apply()(implicit sys: ActorSystem, mat: Materializer, cs: ContextShift[IO]): EasyClient =
     new EasyClient(Http().singleRequest(_))
 
-  def withBreaker(implicit sys: ActorSystem, mat: Materializer): EasyClient = {
+  def withBreaker(implicit sys: ActorSystem, mat: Materializer, cs: ContextShift[IO]): EasyClient = {
     val breaker =
       CircuitBreaker(scheduler = sys.scheduler, maxFailures = 10, callTimeout = 5.second, resetTimeout = 30.seconds)
     new EasyClient(req => breaker.withCircuitBreaker(Http().singleRequest(req)))
   }
 
-  def withBreaker(breaker: CircuitBreaker)(implicit sys: ActorSystem, mat: Materializer): EasyClient =
+  def withBreaker(
+      breaker: CircuitBreaker
+  )(implicit sys: ActorSystem, mat: Materializer, cs: ContextShift[IO]): EasyClient =
     new EasyClient(req => breaker.withCircuitBreaker(Http().singleRequest(req)))
 }
