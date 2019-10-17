@@ -25,5 +25,11 @@ developers in ThisBuild := List(
     name = "Yannick Gladow",
     email = "yannick.gladow@gmail.com",
     url = url("https://github.com/yannick-cw")
+  ),
+  Developer(
+    id = "sebruck",
+    name = "Sebastian Bruckner",
+    email = "sebbruck@googlemail.com",
+    url = url("https://github.com/Sebruck")
   )
 )
