@@ -10,8 +10,8 @@ object RefinedUnmarshaller {
       fromStringUnm: FromStringUnmarshaller[RefinedBaseType]
   ): FromStringUnmarshaller[RefinedBaseType Refined Predicate] =
     fromStringUnm.andThen(
-      Unmarshaller.strict[RefinedBaseType, RefinedBaseType Refined Predicate](
-        in => refineV[Predicate](in).fold(err => throw new Exception(s"$in is not valid: $err"), identity)
+      Unmarshaller.strict[RefinedBaseType, RefinedBaseType Refined Predicate](in =>
+        refineV[Predicate](in).fold(err => throw new Exception(s"$in is not valid: $err"), identity)
       )
     )
 }

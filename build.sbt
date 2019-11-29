@@ -26,6 +26,12 @@ lazy val easyAkkaClient = (project in file("easy-akka-client"))
     libraryDependencies := akkaHttpDependencies ++ cats ++ scalaTest ++ akkaHttpCirce ++ circe
   )
 
+lazy val richAkkaClient = (project in file("rich-akka-client"))
+  .settings(
+    name := "rich-akka-client",
+    libraryDependencies := prometheus ++ opencensus
+  ).dependsOn(easyAkkaClient)
+
 lazy val easyAkkaMarshalling = (project in file("easy-akka-marshalling"))
   .settings(
     name := "easy-akka-marshalling",
