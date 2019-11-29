@@ -16,9 +16,9 @@ publishTo in ThisBuild := Some(
 
 lazy val root = (project in file("."))
   .settings(
-    publishArtifact := false,
+    publishArtifact := false
   )
-  .aggregate(easyAkkaClient, easyAkkaMarshalling)
+  .aggregate(easyAkkaClient, easyAkkaMarshalling, richAkkaClient)
 
 lazy val easyAkkaClient = (project in file("easy-akka-client"))
   .settings(
@@ -30,7 +30,8 @@ lazy val richAkkaClient = (project in file("rich-akka-client"))
   .settings(
     name := "rich-akka-client",
     libraryDependencies := prometheus ++ opencensus
-  ).dependsOn(easyAkkaClient)
+  )
+  .dependsOn(easyAkkaClient)
 
 lazy val easyAkkaMarshalling = (project in file("easy-akka-marshalling"))
   .settings(
