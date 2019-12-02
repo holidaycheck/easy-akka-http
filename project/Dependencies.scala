@@ -39,4 +39,12 @@ object Dependencies {
     "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion % Test,
     "com.typesafe.akka" %% "akka-http-testkit"   % AkkaHttpVersion % Test
   )
+
+  lazy val opencensus = Seq(
+    "com.github.sebruck" %% "opencensus-scala-akka-http" % "0.7.0-M3"
+  )
+
+  lazy val prometheus = Seq(
+    "io.prometheus" % "simpleclient" % "0.8.0"
+  )
 }
