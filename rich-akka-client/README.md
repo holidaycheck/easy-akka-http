@@ -25,9 +25,12 @@ object Test extends App {
   implicit val mat: ActorMaterializer = ActorMaterializer()
 
   case class Result(id: String, name: String)
-
+  
+  // identifier will be used for log messages and as a label for the prometheus metric
   val client = RichClient(
     identifier = "myendpoint",
+    // If withMetrics is true a histogram with the name http_client_request_duration_seconds
+    // will be recorded. It has the label "target" which will be filled with the identifier.
     withMetrics = true,
     circuitBreakerConfig = Some(CircuitBreakerConfig(5, 1.second, 30.seconds))
   )

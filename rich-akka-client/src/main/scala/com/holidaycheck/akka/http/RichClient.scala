@@ -40,9 +40,10 @@ class RichClient(
       Some(
         Histogram
           .build()
-          .name(s"${identifier}_request_duration_seconds")
-          .help(s"Duration in seconds of the call to $identifier")
+          .name(s"http_client_request_duration_seconds")
+          .help(s"Duration in seconds until the whole body was received & parsed")
           .buckets(0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.5, 5.0)
+          .labelNames("target")
           .register()
       )
     else None
@@ -50,7 +51,7 @@ class RichClient(
   private def measureTiming[T](f: => Future[T]): Future[T] = {
     histogram match {
       case Some(h) =>
-        val timer  = h.startTimer()
+        val timer  = h.labels(identifier).startTimer()
         val result = f
         result.onComplete(_ => timer.close())
         result
