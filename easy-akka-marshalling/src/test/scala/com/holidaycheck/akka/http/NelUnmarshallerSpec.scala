@@ -5,7 +5,8 @@ import akka.stream.{ActorMaterializer, Materializer}
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.numeric.NonNegative
 import eu.timepit.refined.string.Uuid
-import org.scalatest.{AsyncFlatSpec, Matchers}
+import org.scalatest.flatspec.AsyncFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 class NelUnmarshallerSpec extends AsyncFlatSpec with Matchers {
   type ID     = String Refined Uuid

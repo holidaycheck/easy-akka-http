@@ -8,9 +8,10 @@ import cats.effect.{ContextShift, IO}
 import com.holidaycheck.akka.http.EasyClient.RequestFailed
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
-import org.scalatest.{AsyncFlatSpec, Matchers}
 
 import scala.concurrent.Future
+import org.scalatest.flatspec.AsyncFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 class EasyClientSpec extends AsyncFlatSpec with Matchers with FailFastCirceSupport {
 

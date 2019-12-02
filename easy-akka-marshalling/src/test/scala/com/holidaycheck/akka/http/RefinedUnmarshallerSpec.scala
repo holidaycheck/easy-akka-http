@@ -3,9 +3,10 @@ package com.holidaycheck.akka.http
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.numeric.NonNegative
 import eu.timepit.refined.string.Uuid
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class RefinedUnmarshallerSpec extends FlatSpec with Matchers {
+class RefinedUnmarshallerSpec extends AnyFlatSpec with Matchers {
   type ID     = String Refined Uuid
   type Number = Int Refined NonNegative
 
