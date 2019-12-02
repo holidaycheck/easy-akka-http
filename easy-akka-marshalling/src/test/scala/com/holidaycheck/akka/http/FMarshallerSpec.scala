@@ -2,9 +2,10 @@ package com.holidaycheck.akka.http
 
 import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.server.StandardRoute
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
-class FMarshallerSpec extends FlatSpec with Matchers {
+class FMarshallerSpec extends AnyFlatSpec with Matchers {
 
   behavior of "Completing akka routes for F"
 
