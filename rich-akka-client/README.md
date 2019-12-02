@@ -7,6 +7,8 @@ and distributed tracing via [OpenCensus](https://github.com/census-ecosystem/ope
 
 ## Usage
 
+Dependency: `"com.holidaycheck" %% "rich-akka-client" % "0.2.0"`
+
 ```scala
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.HttpRequest
