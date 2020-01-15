@@ -1,7 +1,6 @@
 package com.holidaycheck.akka.http
 
 import akka.actor.ActorSystem
-import akka.stream.{ActorMaterializer, Materializer}
 import eu.timepit.refined.api.Refined
 import eu.timepit.refined.numeric.NonNegative
 import eu.timepit.refined.string.Uuid
@@ -38,8 +37,7 @@ class NelUnmarshallerSpec extends AsyncFlatSpec with Matchers {
     import akka.http.scaladsl.unmarshalling.FromStringUnmarshaller
     import cats.data.NonEmptyList
     import com.holidaycheck.akka.http.NelUnmarshaller._
-    implicit val sys: ActorSystem  = ActorSystem()
-    implicit val mat: Materializer = ActorMaterializer()
+    implicit val sys: ActorSystem = ActorSystem()
     implicitly[FromStringUnmarshaller[NonEmptyList[Double]]]
       .apply("23,24,25.0")
       .map(_ shouldBe NonEmptyList.of(23.0, 24.0, 25.0))
@@ -49,8 +47,7 @@ class NelUnmarshallerSpec extends AsyncFlatSpec with Matchers {
     import akka.http.scaladsl.unmarshalling.FromStringUnmarshaller
     import cats.data.NonEmptyList
     import com.holidaycheck.akka.http.NelUnmarshaller._
-    implicit val sys: ActorSystem  = ActorSystem()
-    implicit val mat: Materializer = ActorMaterializer()
+    implicit val sys: ActorSystem = ActorSystem()
     recoverToSucceededIf[IllegalArgumentException](implicitly[FromStringUnmarshaller[NonEmptyList[Double]]].apply(""))
   }
 
@@ -58,8 +55,7 @@ class NelUnmarshallerSpec extends AsyncFlatSpec with Matchers {
     import akka.http.scaladsl.unmarshalling.FromStringUnmarshaller
     import cats.data.NonEmptyList
     import com.holidaycheck.akka.http.NelUnmarshaller._
-    implicit val sys: ActorSystem  = ActorSystem()
-    implicit val mat: Materializer = ActorMaterializer()
+    implicit val sys: ActorSystem = ActorSystem()
     recoverToSucceededIf[IllegalArgumentException](
       implicitly[FromStringUnmarshaller[NonEmptyList[Double]]].apply("hey, you")
     )

@@ -4,9 +4,9 @@ object Dependencies {
   val ScalaTestVersion     = "3.1.0"
   val AkkaHttpVersion      = "10.1.11"
   val CatsEffectVersion    = "2.0.0"
-  val AkkaVersion          = "2.5.26"
+  val AkkaVersion          = "2.6.1"
   val CirceVersion         = "0.12.3"
-  val AkkaHttpCirceVersion = "1.29.1"
+  val AkkaHttpCirceVersion = "1.30.0"
   val RefinedVersion       = "0.9.10"
 
   lazy val circe = Seq(
