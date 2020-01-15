@@ -1,8 +1,8 @@
 import sbt._
 
 object Dependencies {
-  val ScalaTestVersion     = "3.0.8"
-  val AkkaHttpVersion      = "10.1.10"
+  val ScalaTestVersion     = "3.1.0"
+  val AkkaHttpVersion      = "10.1.11"
   val CatsEffectVersion    = "2.0.0"
   val AkkaVersion          = "2.5.26"
   val CirceVersion         = "0.12.3"
@@ -38,5 +38,13 @@ object Dependencies {
     "com.typesafe.akka" %% "akka-stream"         % AkkaVersion,
     "com.typesafe.akka" %% "akka-stream-testkit" % AkkaVersion % Test,
     "com.typesafe.akka" %% "akka-http-testkit"   % AkkaHttpVersion % Test
+  )
+
+  lazy val opencensus = Seq(
+    "com.github.sebruck" %% "opencensus-scala-akka-http" % "0.7.0-M3"
+  )
+
+  lazy val prometheus = Seq(
+    "io.prometheus" % "simpleclient" % "0.8.0"
   )
 }
