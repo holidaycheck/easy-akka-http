@@ -1,6 +1,5 @@
 import akka.actor.ActorSystem
 import akka.http.scaladsl.model.HttpRequest
-import akka.stream.ActorMaterializer
 import com.holidaycheck.akka.http.{CircuitBreakerConfig, RichClient}
 import io.circe.generic.auto._
 import io.opencensus.trace.BlankSpan
@@ -9,8 +8,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object Test extends App {
-  implicit val sys: ActorSystem       = ActorSystem()
-  implicit val mat: ActorMaterializer = ActorMaterializer()
+  implicit val sys: ActorSystem = ActorSystem()
 
   case class Result(id: String, name: String)
 

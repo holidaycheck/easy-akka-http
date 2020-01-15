@@ -3,21 +3,19 @@ package com.holidaycheck.akka.http
 import akka.actor.ActorSystem
 import akka.http.scaladsl.marshalling.Marshal
 import akka.http.scaladsl.model.{HttpRequest, HttpResponse, StatusCodes}
-import akka.stream.ActorMaterializer
 import cats.effect.{ContextShift, IO}
 import com.holidaycheck.akka.http.EasyClient.RequestFailed
 import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport
 import io.circe.generic.auto._
-
-import scala.concurrent.Future
 import org.scalatest.flatspec.AsyncFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import scala.concurrent.Future
+
 class EasyClientSpec extends AsyncFlatSpec with Matchers with FailFastCirceSupport {
 
-  implicit val sys: ActorSystem       = ActorSystem()
-  implicit val mat: ActorMaterializer = ActorMaterializer()
-  implicit val cs: ContextShift[IO]   = IO.contextShift(sys.dispatcher)
+  implicit val sys: ActorSystem     = ActorSystem()
+  implicit val cs: ContextShift[IO] = IO.contextShift(sys.dispatcher)
 
   case class ExampleResponse(name: String)
   val testResponse = ExampleResponse("hello")
