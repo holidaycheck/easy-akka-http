@@ -41,7 +41,7 @@ object Dependencies {
   )
 
   lazy val opencensus = Seq(
-    "com.github.sebruck" %% "opencensus-scala-akka-http" % "0.7.0-M3"
+    "com.github.sebruck" %% "opencensus-scala-akka-http" % "0.7.0"
   )
 
   lazy val prometheus = Seq(
