@@ -45,6 +45,6 @@ object Dependencies {
   )
 
   lazy val prometheus = Seq(
-    "io.prometheus" % "simpleclient" % "0.8.0"
+    "io.prometheus" % "simpleclient" % "0.8.1"
   )
 }
