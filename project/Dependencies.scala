@@ -6,7 +6,7 @@ object Dependencies {
   val CatsEffectVersion    = "2.0.0"
   val AkkaVersion          = "2.6.2"
   val CirceVersion         = "0.13.0"
-  val AkkaHttpCirceVersion = "1.30.0"
+  val AkkaHttpCirceVersion = "1.31.0"
   val RefinedVersion       = "0.9.12"
 
   lazy val circe = Seq(
