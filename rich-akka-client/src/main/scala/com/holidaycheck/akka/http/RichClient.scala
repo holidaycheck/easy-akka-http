@@ -35,18 +35,7 @@ class RichClient(
     case None => body
   }
 
-  private val histogram =
-    if (withMetrics)
-      Some(
-        Histogram
-          .build()
-          .name(s"http_client_request_duration_seconds")
-          .help(s"Duration in seconds until the whole body was received & parsed")
-          .buckets(0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.5, 5.0)
-          .labelNames("target")
-          .register()
-      )
-    else None
+  private val histogram = if (withMetrics) Some(RichClient.requestDurationMetric) else None
 
   private def measureTiming[T](f: => Future[T]): Future[T] = {
     histogram match {
@@ -70,6 +59,15 @@ class RichClient(
 }
 
 object RichClient {
+
+  private[RichClient] val requestDurationMetric =
+    Histogram
+      .build()
+      .name(s"http_client_request_duration_seconds")
+      .help(s"Duration in seconds until the whole body was received & parsed")
+      .buckets(0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.5, 5.0)
+      .labelNames("target")
+      .register()
 
   def apply(
       doRequest: HttpRequest => Future[HttpResponse],
