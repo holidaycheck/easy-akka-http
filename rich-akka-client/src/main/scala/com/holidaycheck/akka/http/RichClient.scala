@@ -65,7 +65,8 @@ object RichClient {
       .build()
       .name(s"http_client_request_duration_seconds")
       .help(s"Duration in seconds until the whole body was received & parsed")
-      .buckets(0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0, 1.5, 2.5, 5.0)
+      .buckets(0.01, 0.025, 0.05, 0.075, 0.1, 0.125, 0.15, 0.175, 0.2, 0.225, 0.25, 0.275, 0.3, 0.325, 0.35, 0.4, 0.45,
+        0.5, 0.6, 0.7, 1.0, 2.0, 3.0, 5.0, 10.0)
       .labelNames("target")
       .register()
 
