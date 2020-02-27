@@ -5,7 +5,7 @@ Akka HTTP Client with Circe for JSON
 `"com.holidaycheck" %% "easy-akka-client" % "0.2.3"`
 
 ### [Rich Client](https://github.com/holidaycheck/easy-akka-http/tree/master/rich-akka-client)
-Easy Client (Akka HTTP + Circe), Circuit Breaker, Prometheus Histogram, OpenCensus Tracing
+Easy Client (Akka HTTP + Circe), Circuit Breaker, OpenCensus Tracing & Stats
 
 `"com.holidaycheck" %% "rich-akka-client" % "0.2.3"`
 

@@ -13,7 +13,7 @@ class RichClientSpec extends AnyFlatSpec with BeforeAndAfterAll {
 
   it should "be possible to create two instances with metrics enabled" in {
     def createClient(identifier: String) =
-      RichClient(_ => Future.successful(HttpResponse()), identifier, withMetrics = true, None)
+      RichClient(_ => Future.successful(HttpResponse()), identifier, None)
 
     createClient("client1")
     createClient("client2")

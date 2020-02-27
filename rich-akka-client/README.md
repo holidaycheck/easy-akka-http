@@ -2,8 +2,12 @@
 
 `RichClient` makes it easy to do http requests with Akka-HTTP, [circe](https://github.com/circe/circe) for json, 
 an [akka circuit breaker](https://doc.akka.io/docs/akka/current/common/circuitbreaker.html) for timeouts,
-a [Prometheus Historgram](https://prometheus.io/docs/practices/histograms/) to measure the response times 
-and distributed tracing via [OpenCensus](https://github.com/census-ecosystem/opencensus-scala).
+stats (metrics) and distributed tracing via [OpenCensus](https://github.com/census-ecosystem/opencensus-scala).
+
+The stats are recorded as defined in the [opencensus-spec](https://github.com/census-instrumentation/opencensus-specs/blob/master/stats/HTTP.md).
+For further instructions on how to setup exporters for tracing and stats check the 
+[opencensus-scala documentation](https://github.com/census-ecosystem/opencensus-scala).
+
 
 ## Usage
 
@@ -22,16 +26,12 @@ import scala.concurrent.duration._
 
 object Test extends App {
   implicit val sys: ActorSystem       = ActorSystem()
-  implicit val mat: ActorMaterializer = ActorMaterializer()
 
   case class Result(id: String, name: String)
   
-  // identifier will be used for log messages and as a label for the prometheus metric
+  // identifier will be used for log messages and as a tag for the stats
   val client = RichClient(
     identifier = "myendpoint",
-    // If withMetrics is true a histogram with the name http_client_request_duration_seconds
-    // will be recorded. It has the label "target" which will be filled with the identifier.
-    withMetrics = true,
     circuitBreakerConfig = Some(CircuitBreakerConfig(5, 1.second, 30.seconds))
   )
 
