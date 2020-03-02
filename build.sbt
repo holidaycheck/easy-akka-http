@@ -29,7 +29,7 @@ lazy val easyAkkaClient = (project in file("easy-akka-client"))
 lazy val richAkkaClient = (project in file("rich-akka-client"))
   .settings(
     name := "rich-akka-client",
-    libraryDependencies := prometheus ++ opencensus
+    libraryDependencies := opencensus ++ scalaTest
   )
   .dependsOn(easyAkkaClient)
 
