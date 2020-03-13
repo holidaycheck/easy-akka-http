@@ -26,13 +26,15 @@ class RichClient(
 
   private val doRequestWithStats = StatsClient.recorded(doRequest, identifier)
 
-  private def withCB[T](body: => Future[T]): Future[T] = circuitBreakerConfig match {
-    case Some(c) =>
-      CircuitBreaker(system.scheduler, c.maxFailures, callTimeout = c.callTimeout, resetTimeout = c.resetTimeout)
-        .onCallBreakerOpen(logger.error(s"Circuit Breaker for $identifier opened. Failing fast for ${c.resetTimeout}"))
-        .onCallTimeout(_ => logger.error(s"Call to $identifier timed out after ${c.callTimeout}"))
-        .withCircuitBreaker(body)
-    case None => body
+  private val circuitBreaker = circuitBreakerConfig.map(c =>
+    CircuitBreaker(system.scheduler, c.maxFailures, callTimeout = c.callTimeout, resetTimeout = c.resetTimeout)
+      .onCallBreakerOpen(logger.error(s"Circuit Breaker for $identifier opened. Failing fast for ${c.resetTimeout}"))
+      .onCallTimeout(_ => logger.error(s"Call to $identifier timed out after ${c.callTimeout}"))
+  )
+
+  private def withCB[T](body: => Future[T]): Future[T] = circuitBreaker match {
+    case Some(cb) => cb.withCircuitBreaker(body)
+    case None     => body
   }
 
   private def call[R: Decoder](r: HttpRequest => Future[HttpResponse], req: HttpRequest) =
