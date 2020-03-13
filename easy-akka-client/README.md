@@ -4,7 +4,7 @@
 for decoding and encoding.
 
 ## Usage
-Dependency: `"com.holidaycheck" %% "easy-akka-client" % "0.2.3"`
+Dependency: `"com.holidaycheck" %% "easy-akka-client" % "0.2.5"`
 
 ```scala
 import akka.actor.ActorSystem

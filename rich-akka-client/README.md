@@ -11,7 +11,7 @@ For further instructions on how to setup exporters for tracing and stats check t
 
 ## Usage
 
-Dependency: `"com.holidaycheck" %% "rich-akka-client" % "0.2.3"`
+Dependency: `"com.holidaycheck" %% "rich-akka-client" % "0.2.5"`
 
 ```scala
 import akka.actor.ActorSystem
