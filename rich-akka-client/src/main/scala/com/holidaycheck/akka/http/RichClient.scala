@@ -37,13 +37,17 @@ class RichClient(
     case None     => body
   }
 
-  private def call[R: Decoder](r: HttpRequest => Future[HttpResponse], req: HttpRequest) =
+  private def performCall[R: Decoder](r: HttpRequest => Future[HttpResponse], req: HttpRequest) =
     withCB(EasyClient.callTo(r)(req))
 
-  def callToTraced[R: Decoder](req: HttpRequest, parentSpan: Span): Future[R] =
-    call(TracingClient.traceRequest(doRequestWithStats, parentSpan), req)
+  def callTo[R: Decoder](req: HttpRequest, parentSpan: Span): Future[R] =
+    performCall(TracingClient.traceRequest(doRequestWithStats, parentSpan), req)
 
-  def callTo[R: Decoder](req: HttpRequest): Future[R] = call(doRequestWithStats, req)
+  def callTo[R: Decoder](req: HttpRequest): Future[R] = performCall(doRequestWithStats, req)
+
+  def call(httpRequest: HttpRequest, parentSpan: Span): Future[HttpResponse] =
+    withCB(TracingClient.traceRequest(doRequestWithStats, parentSpan)(httpRequest))
+
 }
 
 object RichClient {
