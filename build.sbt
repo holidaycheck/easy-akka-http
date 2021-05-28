@@ -3,7 +3,7 @@ import Dependencies._
 name in ThisBuild := "easy-akka-http"
 organization in ThisBuild := "com.holidaycheck"
 scalaVersion in ThisBuild := "2.13.1"
-crossScalaVersions in ThisBuild := Seq("2.13.1", "2.12.10")
+crossScalaVersions in ThisBuild := Seq("2.13.1", "2.12.14")
 scalafmtOnCompile in ThisBuild := true
 
 releasePublishArtifactsAction in ThisBuild := PgpKeys.publishSigned.value
