@@ -5,7 +5,7 @@ object Dependencies {
   val AkkaHttpVersion      = "10.1.11"
   val CatsEffectVersion    = "2.1.2"
   val AkkaVersion          = "2.6.2"
-  val CirceVersion         = "0.13.0"
+  val CirceVersion         = "0.14.3"
   val AkkaHttpCirceVersion = "1.30.0"
   val RefinedVersion       = "0.9.12"
 
